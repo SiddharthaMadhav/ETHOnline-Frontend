@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-
+import Image from "next/image";
 import {
   getDefaultConfig,
   RainbowKitProvider,
@@ -38,6 +38,8 @@ export default function Home() {
             })}
           >
             <Navbar />
+            <h1 class="h1home">SureBuy</h1>
+            <h3 class="h3home">A verified decentralized marketplace</h3>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>

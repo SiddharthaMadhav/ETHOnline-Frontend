@@ -53,7 +53,7 @@ a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 20px;
 }
 
 .toplinks {
@@ -65,4 +65,58 @@ a {
   float: right;
   margin-top: 30px;
   margin-right: 40px;
+}
+
+.h1home {
+  font-size: 180px;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.h3home {
+  font-size: 30px;
+  text-align: center;
+}
+
+ul {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  list-style-type: none;
+  background-color: #dddddd;
+  height: 1000px;
+}
+
+li a {
+
+  display: block;
+  width: 200px;
+  margin-bottom: 50px;
+}
+
+.ProductDiv {
+  margin-bottom: 50px;
+}
+
+.productImg {
+  float: left;
+}
+
+
+.productName {
+  margin-left: 450px;
+}
+
+.productP {
+  margin-left: 450px;
+  margin-top: 5px;
+}
+
+.productButton {
+  float: right;
+  margin-right: 50px;
+  padding: 10px 26px;
 }
