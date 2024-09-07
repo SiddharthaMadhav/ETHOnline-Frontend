@@ -105,21 +105,29 @@ li a {
   float: left;
 }
 
-
 .productName {
   margin-left: 450px;
 }
 
 .productP {
   margin-left: 450px;
-  margin-top: 5px;
 }
 
 .productButton {
   float: right;
+  width: 100px;
+  height: 50px;
   margin-right: 50px;
-  padding: 10px 26px;
+  background-color: black;
+  color: white;
 }
+
+.productButton:hover {
+  background-color: lightgreen;
+  color: white;
+}
+
+
 
 form {
   max-width: 400px; /* Set a maximum width for the form */
@@ -181,4 +189,40 @@ button:hover {
 .auth2 {
   margin-left: 260px;
   margin-bottom: 50px;
+}
+
+
+.request {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  flex-direction: column; 
+}
+
+.requestName, .requestAddress {
+  margin: 0;
+}
+
+.requestButtons {
+  display: flex;
+  flex-direction: row;
+}
+
+.requestButton {
+  float: right;
+  margin: 5px 0;
+  padding: 10px 20px;
+  width: 100px;
+  height: 50px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.requestButton:hover {
+  background-color: #0056b3;
 }

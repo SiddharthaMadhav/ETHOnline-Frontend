@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import { ethers } from "ethers";
 import ManufacturerNavbar from "@/components/ManufacturerNavbar";
+import Request from "@/components/Request";
 
 import HProduct from "@/components/HProduct";
 import SureBuyABI from "@/artifacts/SureBuyABI";
@@ -39,7 +40,7 @@ const index = () => {
   const [result, setResult] = useState();
   const [prov, SetProv] = useState();
   const [sign, setSign] = useState();
-  const [rows, setRows] = useState();
+  const [name, setName] = useState();
 
   const readContract = async () => {
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -52,30 +53,64 @@ const index = () => {
       SureBuyABI,
       signer
     );
-    try {
-      const address = await signer.getAddress();
-      const aresult = await mpContract.getApprovedVendors(address);
-      let row = [];
-      for (let i = 0; i < aresult.length; i++) {
-        let bresult = await mpContract.getEntity(aresult[i]);
-        console.log("Inside for loop: " + aresult[i] + " " + bresult[1]);
-        row.push(<h2 class="auth1">{"Name of the vendor: " + bresult[1]}</h2>);
-        row.push(
-          <h3 class="auth2">{"Address of the vendor: " + aresult[i]}</h3>
-        );
-      }
-      setRows(row);
-      setResult(aresult);
-      SetProv(provider);
-      setSign(signer);
-      setLoaded(true);
-    } catch (e) {
-      console.log(e);
+    let names = [];
+    const address = await signer.getAddress();
+    const aresult = await mpContract.getRequests();
+    for (let i = 0; i < aresult.length; i++) {
+      let bresult = await mpContract.getEntity(aresult[i][1]);
+      names.push(
+        <Request
+          name={bresult[1]}
+          address={aresult[i][1]}
+          id={Number(aresult[i][0])}
+          accept={handleAccept}
+          decline={handleDecline}
+        />
+      );
     }
+    setName(names);
+    setResult(aresult);
+    SetProv(provider);
+    setSign(signer);
+    setLoaded(true);
   };
   useEffect(() => {
     readContract();
   }, []);
+
+  const handleAccept = async (id) => {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    let accounts = await provider.send("eth_requestAccounts", []);
+    const signer = await provider.getSigner();
+    const marketplaceAddress = "0xc44743ec4191620132794D1A50642D264c269A1D";
+    const mpContract = new ethers.Contract(
+      marketplaceAddress,
+      SureBuyABI,
+      signer
+    );
+    try {
+      await mpContract.confirmRequest(id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDecline = async (id) => {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    let accounts = await provider.send("eth_requestAccounts", []);
+    const signer = await provider.getSigner();
+    const marketplaceAddress = "0xc44743ec4191620132794D1A50642D264c269A1D";
+    const mpContract = new ethers.Contract(
+      marketplaceAddress,
+      SureBuyABI,
+      signer
+    );
+    try {
+      await mpContract.declineRequest(id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <WagmiProvider config={config}>
@@ -88,7 +123,7 @@ const index = () => {
         >
           <Navbar />
           <ManufacturerNavbar />
-          {loaded && rows}
+          {loaded && name}
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
