@@ -36,21 +36,25 @@ const index = () => {
   const [prov, SetProv] = useState();
   const [sign, setSign] = useState();
   const readContract = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    const signer = await provider.getSigner();
-    const marketplaceAddress = "0x96b412d49bc204C548575Ee23C255672442CA27F";
-    const mpContract = new ethers.Contract(
-      marketplaceAddress,
-      SureBuyMPABI,
-      provider
-    );
-    const aresult = await mpContract.fetchAllProducts();
-    console.log(aresult[0][5]);
-    setLoaded(true);
-    setResult(aresult);
-    SetProv(provider);
-    setSign(signer);
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      const signer = await provider.getSigner();
+      const marketplaceAddress = "0x96b412d49bc204C548575Ee23C255672442CA27F";
+      const mpContract = new ethers.Contract(
+        marketplaceAddress,
+        SureBuyMPABI,
+        provider
+      );
+      const aresult = await mpContract.fetchAllProducts();
+      console.log(aresult[0][5]);
+      setLoaded(true);
+      setResult(aresult);
+      SetProv(provider);
+      setSign(signer);
+    } catch (e) {
+      console.log(e);
+    }
   };
   useEffect(() => {
     readContract();
