@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function HProduct(product) {
   return (
-    <div>
+    <div class="ProductDiv">
       <div className="productImg">
         <Image src={product.uri} width={200} height={120} />
       </div>
