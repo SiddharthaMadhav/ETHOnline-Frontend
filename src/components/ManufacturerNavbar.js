@@ -9,6 +9,9 @@ const ManufacturerNavbar = () => {
       <li>
         <a href="/manufacturers/requests">Pending requests</a>
       </li>
+      <li>
+        <a href="/manufacturers/register">Register</a>
+      </li>
     </ul>
   );
 };
