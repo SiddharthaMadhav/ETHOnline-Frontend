@@ -92,7 +92,7 @@ const index = () => {
             </div>
             <div>
               <label>
-                Address of vendor:
+                PAN of vendor:
                 <input
                   type="text"
                   name="string2"
@@ -102,7 +102,7 @@ const index = () => {
                 />
               </label>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Register</button>
           </form>
         </RainbowKitProvider>
       </QueryClientProvider>

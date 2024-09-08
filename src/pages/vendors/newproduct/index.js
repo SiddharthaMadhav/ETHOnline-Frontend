@@ -151,7 +151,7 @@ const index = () => {
                 />
               </label>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Sell</button>
           </form>
         </RainbowKitProvider>
       </QueryClientProvider>
