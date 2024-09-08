@@ -15,6 +15,9 @@ const VendorNavbar = () => {
       <li>
         <a href="/vendors/newrequest">New request</a>
       </li>
+      <li>
+        <a href="/vendors/register">Register</a>
+      </li>
     </ul>
   );
 };

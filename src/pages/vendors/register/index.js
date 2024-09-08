@@ -35,35 +35,36 @@ const config = getDefaultConfig({
 const queryClient = new QueryClient();
 
 const index = () => {
-  const [loaded, setLoaded] = useState(false);
-  const [result, setResult] = useState();
-  const [prov, SetProv] = useState();
-  const [sign, setSign] = useState();
+  const [formData, setFormData] = useState({
+    string1: "",
+    string2: "",
+  });
 
-  const readContract = async () => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       let accounts = await provider.send("eth_requestAccounts", []);
-
       const signer = await provider.getSigner();
-      const marketplaceAddress = "0x96b412d49bc204C548575Ee23C255672442CA27F";
+      const marketplaceAddress = "0xc44743ec4191620132794D1A50642D264c269A1D";
       const mpContract = new ethers.Contract(
         marketplaceAddress,
-        SureBuyMPABI,
+        SureBuyABI,
         signer
       );
-      const aresult = await mpContract.fetchSoldProducts();
-      setResult(aresult);
-      SetProv(provider);
-      setSign(signer);
-      setLoaded(true);
+      await mpContract.registerAsVendor(formData.string1, formData.string2);
     } catch (e) {
       console.log(e);
     }
   };
-  useEffect(() => {
-    readContract();
-  }, []);
 
   return (
     <WagmiProvider config={config}>
@@ -76,16 +77,33 @@ const index = () => {
         >
           <Navbar />
           <VendorNavbar />
-          {loaded &&
-            result.map((r) => (
-              <HProduct
-                name={r[1]}
-                manufacturer={r[2]}
-                uri={r[6]}
-                description={r[4]}
-                price={ethers.formatEther(r[5].toString())}
-              />
-            ))}
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>
+                Name of vendor:
+                <input
+                  type="text"
+                  name="string1"
+                  value={formData.string1}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Address of vendor:
+                <input
+                  type="text"
+                  name="string2"
+                  value={formData.string2}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
